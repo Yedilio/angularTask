@@ -1,0 +1,44 @@
+<div class="form">
+  <div class="title" @show #title>
+    <h3>Список</h3>
+    <div class="add" (click)="add()">+</div>
+  </div>
+
+  <div class="units mb-10"
+       [ngStyle]="{'height': 'calc(100% - ' + (title.offsetHeight + 10) + 'px)'}" @show>
+    <div class="row main-row">
+      <div class="row-item">#</div>
+      <div class="row-item">Наименование</div>
+      <div class="row-item">Значение</div>
+      <div class="row-item"></div>
+      <div class="row-item"></div>
+    </div>
+      <div class="list" #scroll>
+        <div class="row" *ngFor="let item of data; index as index">
+          <div class="row-item">{{index + 1}}</div>
+          <div class="row-item">
+            <input [ngClass]="{'isEditable': !item.isReadOnly}"
+                   placeholder="Введите наименование"
+                    type="text" [readOnly]="item.isReadOnly" [ngModel]="item.title">
+          </div>
+          <div class="row-item">
+            <input  [ngClass]="{'isEditable': !item.isReadOnly}"
+                    placeholder="Введите значение"
+                    type="text" [readOnly]="item.isReadOnly" [ngModel]="item.body">
+          </div>
+          <div class="row-item">
+            <mat-icon *ngIf="item.isReadOnly"
+                      matTooltip="Редактировать"
+                      (click)="edit(item)">edit</mat-icon>
+            <mat-icon *ngIf="!item.isReadOnly" color="primary"
+                      matTooltip="Сохранить" (click)="save(item)">check_circle</mat-icon>
+          </div>
+          <div class="row-item" matTooltip="'Удалить'"
+               (click)="delete(item.id)">
+            <mat-icon>delete_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
